@@ -11,7 +11,7 @@
 	::if u.email::
 	<dd>::u.email.split("@")[0]:: at ::u.email.split("@")[1]::</dd>
 	::else::
-	<dd>등록 되어잇지 않음</dd>
+	<dd>등록 되어있지 않음</dd>
 	::end::
 	<dt>그룹</dt>
 	<dd>::u._group.name::</dd>
