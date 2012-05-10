@@ -1,0 +1,11 @@
+<li>
+	::set childs = e.childs()::
+	<div onclick="JsTools.toggle('map_::e.id::'); return false" ::attr class if( childs.length > 0 ) 'browse' else 'no_content'::>&nbsp;</div>
+	<a href="::e.getURL()::" ::attr class if( e.vid != null ) 'has_content'::>::e._title::</a>
+	<ul class="map" id="map_::e.id::" style="display : none">
+	::foreach c childs::
+		::set e = c::
+		::use 'map_tree.mtt'::::end::
+	::end::
+	</ul>
+</li>

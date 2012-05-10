@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+	<head>
+	::use 'head.mtt'::::end::
+	</head>
+
+	<body>
+		<div class="all">
+			<div class="header">
+				<div class="home" onclick="document.location = '/'"><a href="/">::config.title::</a></div>
+			</div>
+			<div class="site">
+				<ul class="menu">
+					$$menuLinks(0)
+				</ul>
+
+				<div class="login">
+					::if user == null::
+						<h1>Login</h1>
+						<p>
+							You can <a href="/wiki/register">register</a> to create an account and edit the pages of the Wiki.
+						</p>
+						<form action="/wiki/login" method="POST">
+							<span class="group"><span class="tfield">User :</span> <input name="user" class="field"/></span>
+							<span class="group"><span class="tfield">Pass :</span> <input type="password" name="pass" class="field"/></span>
+							<input type="hidden" name="url" value="::uri::"/>
+							<input type="submit" value="OK" class="button"/>
+						</form>
+					::else::
+						<h1>Logged</h1>
+						<p>
+							You are logged under the username <strong>::user.name::</strong>, you can <a href="/wiki/logout?url=::uri::" $$confirm()>logout</a> if you need.
+						</p>
+					::end::
+				</div>
+
+				<div class="search">
+					<h1>Search</h1>
+					<form action="/wiki/search">
+						<input name="s" class="field"/>
+						<input type="submit" value="OK" class="button"/>
+					</form>
+				</div>
+
+				<div class="calendar" ::cond calendar::>
+					<h1>Calendar</h1>
+					<table summary="Days with entries">
+						<caption>::calendar.monthName:: ::calendar.year::</caption>
+						<thead>
+							<tr>
+								::foreach d calendar.shortDays::
+								<th>::raw d::</th>
+								::end::
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<td colspan="3" class="prev"><a href="/::calendar.entry._path::?::raw calendar.previous()::">&lt;&lt;</a></td>
+								<td></td>
+								<td colspan="3" class="next"><a href="/::calendar.entry._path::?::raw calendar.next()::">&gt;&gt;</a></td>
+							</tr>
+						</tfoot>
+						<tbody>
+							<tr ::repeat week calendar.getWeeks()::>
+								<td ::repeat d week:: ::attr class if( d == null ) 'no'::>::if d == null::::elseif d.n == 0::::d.day::::else::<a href="/::calendar.entry._path::?::raw calendar.gotoDate(d.day)::">::d.day::</a>::end::</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="links">
+					<h1>Options</h1>
+					<ul>
+						<li ::cond dbAccess::><a href="/db">Database</a></li>
+						<li><a href="/wiki/map">Wiki Map</a></li>
+						::if rss::
+						<li><a href="::rss::">RSS Feed</a></li>
+						::else::
+						<li><a href="/wiki/history">Latest Changes</a></li>
+						::end::
+						<li ::cond canDeleteComments::><a href="/wiki/latestComments">Latest Comments</a></li>
+						<li ::cond user::><a href="/wiki/logout" $$confirm()>Logout</a></li>
+						$$menuLinks(1)
+					</ul>
+				</div>
+
+				<div class="langs">
+					<h1>Langs</h1>
+					<ul>
+					::foreach l langs::
+					<li><a href="/wiki/setlang?url=::uri::;lang=::l.code::" class="::lang_classes(l)::"><img src="/img/::config.style::/flags/flag_::l.code::.gif" alt="::l.code::"/> <span class="name">::l.name::</span></a></li>
+					::end::
+					</ul>
+				</div>
+
+				<ul class="menu2">
+					$$menuLinks(2)
+				</ul>
+
+				<div id="notification" ::cond notification:: ::attr class if( notification.error ) 'error'::>
+					::raw notification.text::
+				</div>
+
+				<div class="content">
+					::raw __content__::
+				</div>
+			</div>
+			<div class="footer">
+				::set copy = section('copy')::
+				::if copy::::raw copy:: · ::end::Powered by <a href="http://haxe.org">Haxe</a>
+			</div>
+		</div>
+	</body>
+</html>
