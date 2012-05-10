@@ -3,22 +3,22 @@
 <h1>::u.name::</h1>
 
 <dl class="user">
-	<dt>Login</dt>
+	<dt>로그인</dt>
 	<dd>::u.name::</dd>
-	<dt>Name</dt>
+	<dt>이름</dt>
 	<dd>::u.realName::</dd>
-	<dt>Mail</dt>
+	<dt>이메일</dt>
 	::if u.email::
 	<dd>::u.email.split("@")[0]:: at ::u.email.split("@")[1]::</dd>
 	::else::
-	<dd>not specified</dd>
+	<dd>등록 되어잇지 않음</dd>
 	::end::
-	<dt>Group</dt>
+	<dt>그룹</dt>
 	<dd>::u._group.name::</dd>
 </dl>
 
 <p class="user">
-	<a href="/wiki/history?user=::u.id::">See latest changes</a>
+	<a href="/wiki/history?user=::u.id::">최근 이력 보기</a>
 </p>
 
 ::end::
