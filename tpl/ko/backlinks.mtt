@@ -3,13 +3,13 @@
 <h1>::entry._path:: backlinks</h1>
 
 <div class="error" ::cond backlinks.length == 0::>
-	No backlink has been found for this page.
+	이 페이지로 가는 백링크가 없다.
 </div>
 
 <ul class="backlinks">
 	::foreach l backlinks::
 	<li><a href="/::l._path::?lang=::l._lang.code::">::l._title::</a> /::l._path:: [::l._lang.code::]</li>
-	::end::
+	::end:: 
 </ul>
 
 ::end::
